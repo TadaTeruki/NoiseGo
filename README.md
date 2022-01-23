@@ -1,4 +1,4 @@
-# NoiseGo - Simple 2D noise generator for Golang
+# NoiseGo - Simple 2D noise generator for Go
 
 Implementation of [**Improved Perlin Noise**](https://doi.org/10.1145/566654.566636) in Golang. <br>
 <br>
