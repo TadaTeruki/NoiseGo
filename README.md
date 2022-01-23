@@ -44,7 +44,7 @@ func main(){
 
 ## Installation
 
-All you have to do is run:<br>
+All you need to do is run:<br>
 
 ```
  $ go get github.com/TadaTeruki/NoiseGo/Noise
