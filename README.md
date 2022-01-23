@@ -55,7 +55,8 @@ All you need to do is run:<br>
  - **K. Perlin : Improving noise** <br>
   ACM Transactions on Graphics <br>
   Volume 21, Issue 3, July 2002, pp 681–682<br>
-  https://doi.org/10.1145/566654.566636
+  ACM : https://doi.org/10.1145/566654.566636<br>
+  Semantic Scholar : https://www.semanticscholar.org/paper/Improving-noise-Perlin/a6fd5071b73f542c79bd08d409c5f73de38dac5d<br>
 
 ## LICENSE
 
