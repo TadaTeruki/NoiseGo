@@ -14,7 +14,7 @@ Implementation of [**Improved Perlin Noise**](https://doi.org/10.1145/566654.566
 ```go
 
 import(
-    noise "github.com/TadaTeruki/NoiseGo"
+    noise "github.com/TadaTeruki/NoiseGo/Noise"
 )
 
 func main(){

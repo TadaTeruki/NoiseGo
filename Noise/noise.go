@@ -6,15 +6,16 @@ import(
 )
 
 type Noise struct{
-	maxSize float64
+	maxValue float64
 	hash []int
 	gradX, gradY []float64
 }
 
-func New(seed int64) Noise{
+func New(seed int64, maxValue uint64) Noise{
+
 	var noise Noise
-	noise.maxSize = 256.0
-	noise.hash = make([]int, int(noise.maxSize))
+	noise.maxValue = float64(maxValue)
+	noise.hash = make([]int, 256)
 
 	noise.gradX = make([]float64, 8)
 	noise.gradY = make([]float64, 8)
@@ -64,27 +65,27 @@ func (noise *Noise) getSquareHash(sqx, sqy float64) int{
 
 func (noise *Noise) Get(query_x, query_y float64) float64{
 
-	qx := query_x * noise.maxSize
-	qy := query_y * noise.maxSize
+	if noise.maxValue == 0 { return 0.0 }
+
 
 	var unitsq struct{sx, sy, ex, ey float64}
 	var hashsq struct{ts, te, bs, be int}
 
-	query_x = mod(qx, noise.maxSize)
-	query_y = mod(qy, noise.maxSize)
+	query_x = mod(query_x, noise.maxValue)
+	query_y = mod(query_y, noise.maxValue)
 
-	unitsq.sx = math.Floor(qx)
-	unitsq.sy = math.Floor(qy)
-	unitsq.ex = mod(unitsq.sx + 1.0, noise.maxSize)
-	unitsq.ey = mod(unitsq.sy + 1.0, noise.maxSize)
+	unitsq.sx = math.Floor(query_x)
+	unitsq.sy = math.Floor(query_y)
+	unitsq.ex = mod(unitsq.sx + 1.0, noise.maxValue)
+	unitsq.ey = mod(unitsq.sy + 1.0, noise.maxValue)
 
 	hashsq.ts = noise.getSquareHash(unitsq.sx, unitsq.sy)
 	hashsq.te = noise.getSquareHash(unitsq.ex, unitsq.sy)
 	hashsq.bs = noise.getSquareHash(unitsq.sx, unitsq.ey)
 	hashsq.be = noise.getSquareHash(unitsq.ex, unitsq.ey)
 
-	ux := qx - unitsq.sx
-	uy := qy - unitsq.sy
+	ux := query_x - unitsq.sx
+	uy := query_y - unitsq.sy
 
 	ga := linearF(fadeF(ux), noise.gradientF(hashsq.ts, ux, uy    ), noise.gradientF(hashsq.te, ux-1.0, uy    ))
 	gb := linearF(fadeF(ux), noise.gradientF(hashsq.bs, ux, uy-1.0), noise.gradientF(hashsq.be, ux-1.0, uy-1.0))
