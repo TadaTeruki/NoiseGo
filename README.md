@@ -1,6 +1,6 @@
-# NoiseGo - the Simplest 2D noise generator for Go
+# NoiseGo
 
-The simplest implementation of [**Improved Perlin Noise**](https://doi.org/10.1145/566654.566636) in Golang. <br>
+Implementation of [**Improved Perlin Noise**](https://doi.org/10.1145/566654.566636) in Golang. <br>
 <br>
 NoiseGo is written only around 120 lines of Go (in version : 1.0.0).<br>
 
