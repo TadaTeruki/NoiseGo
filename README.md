@@ -23,7 +23,7 @@ func main(){
 //      maxValue : Maximum coordinate value (NOT float64)
 //                 -When you queried a noise value with coodinate
 //                  which is greater than maxValue or less than 0.0,
-//                  the return value will be looped (See below).
+//                  the return value will be looped (See below comparison).
     nz := noise.New(100, 256)
     
     
