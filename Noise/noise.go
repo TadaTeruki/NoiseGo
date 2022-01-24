@@ -5,10 +5,12 @@ import(
 	"math/rand"
 )
 
+var gradX = [8]float64{ 1.0, 1.0,-1.0,-1.0, 0.0, 0.0, 1.0, -1.0 }
+var gradY = [8]float64{ 1.0,-1.0, 1.0,-1.0, 1.0,-1.0, 0.0,  0.0 }
+
 type Noise struct{
 	maxValue float64
 	hash []int
-	gradX, gradY []float64
 }
 
 func New(seed int64, maxValue uint64) Noise{
@@ -16,19 +18,6 @@ func New(seed int64, maxValue uint64) Noise{
 	var noise Noise
 	noise.maxValue = float64(maxValue)
 	noise.hash = make([]int, 256)
-
-	noise.gradX = make([]float64, 8)
-	noise.gradY = make([]float64, 8)
-
-	gi := 0
-	for gy := -1.0; gy <= 1.0; gy++ {
-		for gx := -1.0; gx <= 1.0; gx++ {
-			if gx == 0 && gy == 0 {continue}
-			noise.gradX[gi] = gx
-			noise.gradY[gi] = gy
-			gi++
-		}
-	}
 
 	for i := 0; i < len(noise.hash); i++ { noise.hash[i] = i }
 
@@ -54,8 +43,8 @@ func linearF(x, a, b float64) float64{
 }
 
 func (noise *Noise) gradientF(hash int, ux, uy float64) float64{
-	gradIndex := int(hash)%len(noise.gradX)
-	return noise.gradX[gradIndex]*ux + noise.gradY[gradIndex]*uy
+	gradIndex := int(hash)%8
+	return gradX[gradIndex]*ux + gradY[gradIndex]*uy
 }
 
 func (noise *Noise) getSquareHash(sqx, sqy float64) int{
@@ -66,7 +55,6 @@ func (noise *Noise) getSquareHash(sqx, sqy float64) int{
 func (noise *Noise) Get(query_x, query_y float64) float64{
 
 	if noise.maxValue == 0 { return 0.0 }
-
 
 	var unitsq struct{sx, sy, ex, ey float64}
 	var hashsq struct{ts, te, bs, be int}
@@ -96,17 +84,17 @@ func (noise *Noise) Get(query_x, query_y float64) float64{
 
 func (noise *Noise) GetOctaved(query_x, query_y float64, octaves int, persistence float64) float64{
 	
-	sum := 0.0
+	sum_noise := 0.0
 	frequency := 1.0
 	ampl := 1.0
-	scale := 0.0
+	sum_scale := 0.0
 
 	for i := 0; i < octaves; i++ {
-		scale += ampl
-		sum += noise.Get(query_x*frequency, query_y*frequency) * ampl
+		sum_scale += ampl
+		sum_noise += noise.Get(query_x*frequency, query_y*frequency) * ampl
 		ampl *= persistence
 		frequency *= 2
 	}
 
-	return sum/scale
+	return sum_noise/sum_scale
 }

@@ -49,7 +49,7 @@ func main(){
 All you need to do is run:<br>
 
 ```
- $ go get github.com/TadaTeruki/NoiseGo/Noise
+ $ go get -u github.com/TadaTeruki/NoiseGo/Noise
 ```
 
 ## References
