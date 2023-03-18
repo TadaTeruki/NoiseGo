@@ -2,7 +2,6 @@
 
 Implementation of [**Improved Perlin Noise**](https://doi.org/10.1145/566654.566636) in Golang. <br>
 <br>
-NoiseGo is written only around 100 lines of Go (in version : 1.0.1).<br>
 
 ## Preview
 
@@ -14,19 +13,14 @@ NoiseGo is written only around 100 lines of Go (in version : 1.0.1).<br>
 ```go
 
 import(
-    noise "github.com/TadaTeruki/NoiseGo/Noise"
+    "github.com/TadaTeruki/NoiseGo/v2/noise"
 )
 
 func main(){
 //  noise.New(seed int64, maxValue uint64) noise.Noise             
-//   - Initialize noise generator                     
-//  < arguments >                                     
-//      seed : Seed value of noise            
-//      maxValue : Maximum coordinate value (NOT float64)
-//                 -When you queried a noise value with coodinate
-//                  which is greater than maxValue or less than 0.0,
-//                  the return value will be looped (See below comparison).
-    nz := noise.New(100, 256)
+//   - Initialize noise generator 
+//      maxValue : maximum coordinate value
+    nz := noise.New(255)
     
     
 // noise.Get(x, y float64) float64
@@ -46,21 +40,7 @@ func main(){
 
 ## Installation
 
-All you need to do is run:<br>
 
 ```
- $ go get -u github.com/TadaTeruki/NoiseGo/Noise
+ $ go get -u github.com/TadaTeruki/NoiseGo/v2
 ```
-
-## References
-
- - **K. Perlin : Improving noise** <br>
-  ACM Transactions on Graphics <br>
-  Volume 21, Issue 3, July 2002, pp 681–682<br>
-  ACM : https://doi.org/10.1145/566654.566636<br>
-  Semantic Scholar : https://www.semanticscholar.org/paper/Improving-noise-Perlin/a6fd5071b73f542c79bd08d409c5f73de38dac5d<br>
-
-## LICENSE
-
-MIT License<br>
-Copyright (c) 2022 Tada Teruki (多田 瑛貴)
